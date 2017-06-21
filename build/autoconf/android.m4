@@ -219,9 +219,10 @@ fi
 ])
 
 dnl Configure an Android SDK.
-dnl Arg 1: target SDK version, like 23.
-dnl Arg 2: list of build-tools versions, like "23.0.3 23.0.1".
-dnl Arg 3: target lint version, like "25.3.1" (note: we fall back to
+dnl Arg 1: compile SDK version, like 23.
+dnl Arg 2: target SDK version, like 23.
+dnl Arg 3: list of build-tools versions, like "23.0.3 23.0.1".
+dnl Arg 4: target lint version, like "25.3.1" (note: we fall back to
 dnl        unversioned lint if this version is not found).
 AC_DEFUN([MOZ_ANDROID_SDK],
 [
@@ -246,7 +247,7 @@ case "$target" in
         AC_MSG_ERROR([Including platforms/android-* in --with-android-sdk arguments is deprecated.  Use --with-android-sdk=$android_sdk_root.])
     fi
 
-    android_target_sdk=$1
+    android_target_sdk=$2
     AC_MSG_CHECKING([for Android SDK platform version $android_target_sdk])
     android_sdk=$android_sdk_root/platforms/android-$android_target_sdk
     if ! test -e "$android_sdk/source.properties" ; then
@@ -257,7 +258,7 @@ case "$target" in
     AC_MSG_CHECKING([for Android build-tools])
     android_build_tools_base="$android_sdk_root"/build-tools
     android_build_tools_version=""
-    for version in $2; do
+    for version in $3; do
         android_build_tools="$android_build_tools_base"/$version
         if test -d "$android_build_tools" -a -f "$android_build_tools/aapt"; then
             android_build_tools_version=$version
@@ -266,7 +267,7 @@ case "$target" in
         fi
     done
     if test "$android_build_tools_version" = ""; then
-        version=$(echo $2 | cut -d" " -f1)
+        version=$(echo $3 | cut -d" " -f1)
         AC_MSG_ERROR([You must install the Android build-tools version $version.  Try |mach bootstrap|.  (Looked for "$android_build_tools_base"/$version)])
     fi
 
@@ -313,12 +314,16 @@ case "$target" in
       AC_MSG_ERROR([The program emulator was not found.  Try |mach bootstrap|.])
     fi
 
+    # `compileSdkVersion ANDROID_COMPILE_SDK_VERSION` is Gradle-only,
+    # so there's no associated configure check.
+    ANDROID_COMPILE_SDK_VERSION=$1
     ANDROID_TARGET_SDK="${android_target_sdk}"
     ANDROID_SDK="${android_sdk}"
     ANDROID_SDK_ROOT="${android_sdk_root}"
     ANDROID_TOOLS="${android_tools}"
     ANDROID_BUILD_TOOLS_VERSION="$android_build_tools_version"
     AC_DEFINE_UNQUOTED(ANDROID_TARGET_SDK,$ANDROID_TARGET_SDK)
+    AC_SUBST(ANDROID_COMPILE_SDK_VERSION)
     AC_SUBST(ANDROID_TARGET_SDK)
     AC_SUBST(ANDROID_SDK_ROOT)
     AC_SUBST(ANDROID_SDK)
@@ -347,7 +352,7 @@ case "$target" in
     ;;
 esac
 
-android_lint_target=$3
+android_lint_target=$4
 ANDROID_LINT_CLASSPATH=""
 android_lint_versioned_jar="$ANDROID_SDK_ROOT/tools/lib/lint-$android_lint_target.jar"
 android_lint_unversioned_jar="$ANDROID_SDK_ROOT/tools/lib/lint.jar"
