@@ -24,6 +24,9 @@
 /* #undef _EVENT_DISABLE_THREAD_SUPPORT */
 
 /* Define to 1 if you have the `arc4random' function. */
+#ifdef ANDROID
+#define _EVENT_HAVE_ARC4RANDOM 1
+#endif
 /* #undef _EVENT_HAVE_ARC4RANDOM */
 
 /* Define to 1 if you have the `arc4random_buf' function. */
@@ -76,7 +79,9 @@
 #define _EVENT_HAVE_FCNTL_H 1
 
 /* Define to 1 if the system has the type `fd_mask'. */
+#ifndef ANDROID
 #define _EVENT_HAVE_FD_MASK 1
+#endif
 
 /* Do we have getaddrinfo()? */
 #define _EVENT_HAVE_GETADDRINFO 1
@@ -301,7 +306,9 @@
 #define _EVENT_HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/sysctl.h> header file. */
+#ifndef ANDROID
 #define _EVENT_HAVE_SYS_SYSCTL_H 1
+#endif
 
 /* Define to 1 if you have the <sys/time.h> header file. */
 #define _EVENT_HAVE_SYS_TIME_H 1

@@ -18,6 +18,9 @@
 #include "mozilla/gfx/2D.h"
 #ifdef MOZ_X11
 #include "gfxXlibSurface.h"
+#ifdef ANDROID
+#include "mozilla/X11Util.h"
+#endif
 #endif
 #ifdef XP_WIN
 #include "mozilla/D3DMessageUtils.h"

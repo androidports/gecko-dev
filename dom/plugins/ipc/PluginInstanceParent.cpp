@@ -29,6 +29,9 @@
 #include "nsIDOMElement.h"
 #ifdef MOZ_X11
 #include "gfxXlibSurface.h"
+#ifdef ANDROID
+#include "mozilla/X11Util.h"
+#endif
 #endif
 #include "gfxContext.h"
 #include "gfxUtils.h"

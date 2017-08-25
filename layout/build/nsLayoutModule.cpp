@@ -145,7 +145,7 @@ using mozilla::dom::AudioChannelAgent;
 #include "nsNullPrincipal.h"
 #include "nsNetCID.h"
 #ifndef MOZ_WIDGET_GONK
-#if defined(MOZ_WIDGET_ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 #include "nsHapticFeedback.h"
 #endif
 #endif
@@ -342,7 +342,7 @@ NS_GENERIC_FACTORY_CONSTRUCTOR(AudioChannelAgent)
 NS_GENERIC_FACTORY_CONSTRUCTOR(nsDeviceSensors)
 
 #ifndef MOZ_WIDGET_GONK
-#if defined(ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 NS_GENERIC_FACTORY_CONSTRUCTOR(nsHapticFeedback)
 #endif
 #endif
@@ -809,7 +809,7 @@ NS_DEFINE_NAMED_CID(NS_STRUCTUREDCLONECONTAINER_CID);
 NS_DEFINE_NAMED_CID(NS_DEVICE_SENSORS_CID);
 
 #ifndef MOZ_WIDGET_GONK
-#if defined(ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 NS_DEFINE_NAMED_CID(NS_HAPTICFEEDBACK_CID);
 #endif
 #endif
@@ -1122,7 +1122,7 @@ static const mozilla::Module::CIDEntry kLayoutCIDs[] = {
   { &kNS_NULLPRINCIPAL_CID, false, nullptr, nsNullPrincipalConstructor },
   { &kNS_DEVICE_SENSORS_CID, false, nullptr, nsDeviceSensorsConstructor },
 #ifndef MOZ_WIDGET_GONK
-#if defined(ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
   { &kNS_HAPTICFEEDBACK_CID, false, nullptr, nsHapticFeedbackConstructor },
 #endif
 #endif
@@ -1289,7 +1289,7 @@ static const mozilla::Module::ContractIDEntry kLayoutContracts[] = {
   { NS_NULLPRINCIPAL_CONTRACTID, &kNS_NULLPRINCIPAL_CID },
   { NS_DEVICE_SENSORS_CONTRACTID, &kNS_DEVICE_SENSORS_CID },
 #ifndef MOZ_WIDGET_GONK
-#if defined(ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
   { "@mozilla.org/widget/hapticfeedback;1", &kNS_HAPTICFEEDBACK_CID },
 #endif
 #endif

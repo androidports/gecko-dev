@@ -12,7 +12,11 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/TypeTraits.h"
 
+#ifdef ANDROID
+#include <math.h>
+#else
 #include <cmath>
+#endif
 #include <limits.h>
 #include <stdint.h>
 
@@ -127,21 +131,33 @@ template<>
 inline float
 Abs<float>(const float aFloat)
 {
+#ifdef ANDROID
+  return fabs(aFloat);
+#else
   return std::fabs(aFloat);
+#endif
 }
 
 template<>
 inline double
 Abs<double>(const double aDouble)
 {
+#ifdef ANDROID
+  return fabs(aDouble);
+#else
   return std::fabs(aDouble);
+#endif
 }
 
 template<>
 inline long double
 Abs<long double>(const long double aLongDouble)
 {
+#ifdef ANDROID
+  return fabs(aLongDouble);
+#else
   return std::fabs(aLongDouble);
+#endif
 }
 
 } // namespace mozilla

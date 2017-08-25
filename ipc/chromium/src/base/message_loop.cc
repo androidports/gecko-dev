@@ -27,7 +27,7 @@
 #include "base/message_pump_qt.h"
 #endif
 #endif
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 #include "base/message_pump_android.h"
 #endif
 #ifdef MOZ_TASK_TRACER
