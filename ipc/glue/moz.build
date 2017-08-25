@@ -87,6 +87,13 @@ elif CONFIG['OS_ARCH'] == 'Darwin':
 else:
     EXPORTS.mozilla.ipc += ['SharedMemoryBasic_chromium.h']
 
+if CONFIG['OS_ARCH'] == 'Linux' and CONFIG['CROSS_COMPILE'] == '1':
+    EXPORTS.mozilla.ipc += ['SharedMemoryBasic_android.h']
+    UNIFIED_SOURCES += [
+        'SharedMemoryBasic_android.cpp',
+    ]
+
+
 if CONFIG['OS_ARCH'] == 'Linux':
     UNIFIED_SOURCES += [
         'ProcessUtils_linux.cpp',

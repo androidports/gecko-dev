@@ -188,6 +188,15 @@ elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'windows':
             'gfxDWriteFonts.cpp',
         ]
 
+if CONFIG['OS_TARGET'] == 'Linux' and CONFIG['CROSS_COMPILE'] == '1':
+    EXPORTS += [
+        'gfxAndroidPlatform.h',
+        'gfxFT2Fonts.h',
+    ]
+    SOURCES += [
+        'gfxAndroidPlatform.cpp',
+    ]
+
 # Are we targeting x86 or x64?  If so, build gfxAlphaRecoverySSE2.cpp.
 if CONFIG['INTEL_ARCHITECTURE']:
     SOURCES += ['gfxAlphaRecoverySSE2.cpp']
