@@ -226,8 +226,8 @@ if test -n "$gonkdir" ; then
 
     AC_DEFINE(ANDROID)
     AC_DEFINE(GONK)
-else
-    MOZ_ANDROID_NDK
+#else
+#    MOZ_ANDROID_NDK
 fi
 
 case "$target" in
@@ -783,7 +783,8 @@ if test -n "$CROSS_COMPILE"; then
         openbsd*)     OS_ARCH=OpenBSD OS_TARGET=OpenBSD ;;
     esac
     case "${target}" in
-        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Android ;;
+#        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Android ;;
+        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Linux ;;
     esac
 else
     OS_TARGET=`uname -s`
@@ -1627,20 +1628,20 @@ ia64*-hpux*)
     AC_DEFINE(NSCAP_DISABLE_DEBUG_PTR_TYPES)
     ;;
 
-*-android*|*-linuxandroid*)
-    AC_DEFINE(NO_PW_GECOS)
-    no_x=yes
-    _PLATFORM_DEFAULT_TOOLKIT=cairo-android
-    TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
-
-    MOZ_GFX_OPTIMIZE_MOBILE=1
-    MOZ_OPTIMIZE_FLAGS="-O3 -fno-reorder-functions"
-    if test -z "$CLANG_CC"; then
-       MOZ_OPTIMIZE_FLAGS="-freorder-blocks $MOZ_OPTIMIZE_FLAGS"
-    fi
-    # The Maemo builders don't know about this flag
-    MOZ_ARM_VFP_FLAGS="-mfpu=vfp"
-    ;;
+#*-android*|*-linuxandroid*)
+#    AC_DEFINE(NO_PW_GECOS)
+#    no_x=yes
+#    _PLATFORM_DEFAULT_TOOLKIT=cairo-android
+#    TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
+#
+#    MOZ_GFX_OPTIMIZE_MOBILE=1
+#    MOZ_OPTIMIZE_FLAGS="-O3 -fno-reorder-functions"
+#    if test -z "$CLANG_CC"; then
+#       MOZ_OPTIMIZE_FLAGS="-freorder-blocks $MOZ_OPTIMIZE_FLAGS"
+#    fi
+#    # The Maemo builders don't know about this flag
+#    MOZ_ARM_VFP_FLAGS="-mfpu=vfp"
+#    ;;
 
 *-*linux*)
     # Note: both GNU_CC and INTEL_CC are set when using Intel's C compiler.
@@ -2749,11 +2750,11 @@ ENABLE_TESTS=1
 
 USE_ARM_KUSER=
 
-case "${target}" in
-    arm*-android*|arm*-linuxandroid*)
-        USE_ARM_KUSER=1
-        ;;
-esac
+#case "${target}" in
+#    arm*-android*|arm*-linuxandroid*)
+#        USE_ARM_KUSER=1
+#        ;;
+#esac
 
 dnl ========================================================
 dnl Use ARM userspace kernel helpers; tell NSPR to enable

@@ -322,9 +322,9 @@ if test -n "$gonkdir" ; then
     direct_nspr_config=1
     android_cxx_stl=mozstlport
 else
-    if test "$COMPILE_ENVIRONMENT"; then
-        MOZ_ANDROID_NDK
-    fi # COMPILE_ENVIRONMENT
+#    if test "$COMPILE_ENVIRONMENT"; then
+#        MOZ_ANDROID_NDK
+#    fi # COMPILE_ENVIRONMENT
 
     case "$target" in
     *-android*|*-linuxandroid*)
@@ -960,7 +960,8 @@ if test -n "$CROSS_COMPILE"; then
         openbsd*)     OS_ARCH=OpenBSD OS_TARGET=OpenBSD ;;
     esac
     case "${target}" in
-        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Android ;;
+#        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Android ;;
+        *-android*|*-linuxandroid*) OS_ARCH=Linux OS_TARGET=Linux ;;
     esac
 else
     OS_TARGET=`uname -s`
@@ -2085,24 +2086,53 @@ ia64*-hpux*)
 
 *-android*|*-linuxandroid*)
     AC_DEFINE(NO_PW_GECOS)
-    no_x=yes
-    if test -n "$gonkdir"; then
-        _PLATFORM_DEFAULT_TOOLKIT=cairo-gonk
-        _PLATFORM_HAVE_RIL=1
-        MOZ_B2G_FM=1
-        MOZ_SYNTH_PICO=1
-    else
-        _PLATFORM_DEFAULT_TOOLKIT=cairo-android
-        if test "$COMPILE_ENVIRONMENT"; then
-            MOZ_LINKER=1
+#    no_x=yes
+#    if test -n "$gonkdir"; then
+#        _PLATFORM_DEFAULT_TOOLKIT=cairo-gonk
+#        _PLATFORM_HAVE_RIL=1
+#        MOZ_B2G_FM=1
+#        MOZ_SYNTH_PICO=1
+#    else
+#        _PLATFORM_DEFAULT_TOOLKIT=cairo-android
+#        if test "$COMPILE_ENVIRONMENT"; then
+#            MOZ_LINKER=1
+#        fi
+#    fi
+#    TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
+#
+#    MOZ_GFX_OPTIMIZE_MOBILE=1
+#    MOZ_OPTIMIZE_FLAGS="-Os -fno-reorder-functions"
+#    if test -z "$CLANG_CC"; then
+#       MOZ_OPTIMIZE_FLAGS="-freorder-blocks $MOZ_OPTIMIZE_FLAGS"
+#    fi
+#    ;;
+    # Note: both GNU_CC and INTEL_CC are set when using Intel's C compiler.
+    # Similarly for GNU_CXX and INTEL_CXX.
+    if test "$INTEL_CC" -o "$INTEL_CXX"; then
+        # -Os has been broken on Intel's C/C++ compilers for quite a
+        # while; Intel recommends against using it.
+        MOZ_OPTIMIZE_FLAGS="-O2"
+    elif test "$GNU_CC" -o "$GNU_CXX"; then
+        MOZ_PGO_OPTIMIZE_FLAGS="-O3"
+        MOZ_OPTIMIZE_FLAGS="-Os"
+        if test -z "$CLANG_CC"; then
+           MOZ_OPTIMIZE_FLAGS="-freorder-blocks $MOZ_OPTIMIZE_FLAGS"
         fi
     fi
+
     TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
 
-    MOZ_GFX_OPTIMIZE_MOBILE=1
-    MOZ_OPTIMIZE_FLAGS="-Os -fno-reorder-functions"
-    if test -z "$CLANG_CC"; then
-       MOZ_OPTIMIZE_FLAGS="-freorder-blocks $MOZ_OPTIMIZE_FLAGS"
+    MOZ_MEMORY=1
+
+    case "${target_cpu}" in
+    alpha*)
+        CFLAGS="$CFLAGS -mieee"
+        CXXFLAGS="$CXXFLAGS -mieee"
+    ;;
+    esac
+
+    if test -z "$MC"; then
+        MC=mc.exe
     fi
     ;;
 
@@ -3792,22 +3822,22 @@ case "$target_os" in
         ;;
 esac
 
-case "${target}" in
-    *-android*|*-linuxandroid*)
-        if test "$CPU_ARCH" = "arm" ; then
-          USE_ARM_KUSER=1
-        fi
-
-        NSS_DISABLE_DBM=1
-        MOZ_THEME_FASTSTRIPE=1
-        MOZ_TREE_FREETYPE=1
-        if test "$COMPILE_ENVIRONMENT"; then
-            MOZ_MEMORY=1
-        fi
-        MOZ_RAW=1
-        ;;
-
-esac
+#case "${target}" in
+#    *-android*|*-linuxandroid*)
+#        if test "$CPU_ARCH" = "arm" ; then
+#          USE_ARM_KUSER=1
+#        fi
+#
+#        NSS_DISABLE_DBM=1
+#        MOZ_THEME_FASTSTRIPE=1
+#        MOZ_TREE_FREETYPE=1
+#        if test "$COMPILE_ENVIRONMENT"; then
+#            MOZ_MEMORY=1
+#        fi
+#        MOZ_RAW=1
+#        ;;
+#
+#esac
 
 MOZ_ARG_WITH_STRING(external-source-dir,
 [  --with-external-source-dir=dir
@@ -6031,9 +6061,11 @@ if test "$MOZ_GAMEPAD"; then
     Linux)
         MOZ_CHECK_HEADER([linux/joystick.h])
         if test "$ac_cv_header_linux_joystick_h" != "yes"; then
-          AC_MSG_ERROR([Can't find header linux/joystick.h, needed for gamepad support. Please install Linux kernel headers or reconfigure with --disable-gamepad to disable gamepad support.])
+#          AC_MSG_ERROR([Can't find header linux/joystick.h, needed for gamepad support. Please install Linux kernel headers or reconfigure with --disable-gamepad to disable gamepad support.])
+          MOZ_GAMEPAD_BACKEND=android
+        else
+          MOZ_GAMEPAD_BACKEND=linux
         fi
-        MOZ_GAMEPAD_BACKEND=linux
         ;;
     Android)
         MOZ_GAMEPAD_BACKEND=android
@@ -7289,6 +7321,8 @@ else
     if test -n "$gonkdir"; then
       AC_DEFINE(MOZ_MEMORY_GONK)
     fi
+    DSO_LDOPTS="$DSO_LDOPTS -nostartfiles"
+    NSPR_LDFLAGS="$NSPR_LDFLAGS -nostartfiles"
     ;;
   *-*linux*)
     AC_DEFINE(MOZ_MEMORY_LINUX)
