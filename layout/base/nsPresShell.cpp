@@ -183,7 +183,7 @@
 #include "nsQueryObject.h"
 #include "nsLayoutStylesheetCache.h"
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 #include "nsIDocShellTreeOwner.h"
 #endif
 
@@ -7130,7 +7130,7 @@ PresShell::HandleEvent(nsIFrame* aFrame,
       // if the mouse is being captured then retarget the mouse event at the
       // document that is being captured.
       retargetEventDoc = capturingContent->GetCrossShadowCurrentDoc();
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
     } else if ((aEvent->mClass == eTouchEventClass) ||
                (aEvent->mClass == eMouseEventClass) ||
                (aEvent->mClass == eWheelEventClass)) {
@@ -7680,7 +7680,7 @@ PresShell::HandleEvent(nsIFrame* aFrame,
   return rv;
 }
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 nsIDocument*
 PresShell::GetTouchEventTargetDocument()
 {
