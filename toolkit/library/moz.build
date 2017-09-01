@@ -205,10 +205,10 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['MOZ_WIDGET_TOOLKIT'] == 'gonk':
         'stagefright_omx',
     ]
 
-if CONFIG['OS_ARCH'] == 'Linux' and CONFIG['OS_TARGET'] != 'Android':
-    OS_LIBS += [
-        'rt',
-    ]
+#if CONFIG['OS_ARCH'] == 'Linux' and CONFIG['OS_TARGET'] != 'Android':
+#    OS_LIBS += [
+#        'rt',
+#    ]
 
 OS_LIBS += CONFIG['MOZ_CAIRO_OSLIBS']
 OS_LIBS += CONFIG['MOZ_WEBRTC_X11_LIBS']

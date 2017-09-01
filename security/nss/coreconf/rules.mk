@@ -249,7 +249,7 @@ ifdef MT
 	fi
 endif	# MSVC with manifest tool
 else
-	$(MKPROG) -o $@ $(CFLAGS) $(OBJS) $(LDFLAGS) $(EXTRA_LIBS) $(EXTRA_SHARED_LIBS) $(OS_LIBS)
+	$(MKPROG) -o $@ -L$(PREFIX)/lib $(CFLAGS) $(OBJS) $(LDFLAGS) $(EXTRA_LIBS) $(EXTRA_SHARED_LIBS) $(OS_LIBS)
 endif
 
 get_objs:
@@ -310,7 +310,7 @@ ifdef MT
 endif	# MSVC with manifest tool
 endif
 else
-	$(MKSHLIB) -o $@ $(OBJS) $(SUB_SHLOBJS) $(LD_LIBS) $(EXTRA_LIBS) $(EXTRA_SHARED_LIBS) $(OS_LIBS)
+	$(MKSHLIB) -o $@ -L$(PREFIX)/lib $(OBJS) $(SUB_SHLOBJS) $(LD_LIBS) $(EXTRA_LIBS) $(EXTRA_SHARED_LIBS) $(OS_LIBS)
 	chmod +x $@
 endif
 endif

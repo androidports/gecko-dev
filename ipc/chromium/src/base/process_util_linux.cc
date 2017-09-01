@@ -47,7 +47,7 @@ using namespace mozilla::ipc;
 # define CHILD_UNPRIVILEGED_GID 65534
 #endif
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 #include <pthread.h>
 /*
  * Currently, PR_DuplicateEnvironment is implemented in

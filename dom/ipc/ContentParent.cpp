@@ -201,7 +201,7 @@
 #include "mozilla/Hal.h"
 #endif
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
 # include "gfxAndroidPlatform.h"
 #endif
 
@@ -2748,7 +2748,7 @@ ContentParent::RecvReadPrefsArray(InfallibleTArray<PrefSetting>* aPrefs)
 bool
 ContentParent::RecvReadFontList(InfallibleTArray<FontListEntry>* retValue)
 {
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
     gfxAndroidPlatform::GetPlatform()->GetSystemFontList(retValue);
 #endif
     return true;

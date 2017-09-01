@@ -399,7 +399,7 @@ NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsQtNetworkLinkService, Init)
 #elif defined(MOZ_WIDGET_ANDROID)
 #include "nsAndroidNetworkLinkService.h"
 NS_GENERIC_FACTORY_CONSTRUCTOR(nsAndroidNetworkLinkService)
-#elif defined(XP_LINUX)
+#elif defined(XP_LINUX) && !defined(ANDROID_PORTS)
 #include "nsNotifyAddrListener_Linux.h"
 NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsNotifyAddrListener, Init)
 #endif
@@ -980,7 +980,7 @@ static const mozilla::Module::CIDEntry kNeckoCIDs[] = {
     { &kNS_NETWORK_LINK_SERVICE_CID, false, nullptr, nsQtNetworkLinkServiceConstructor },
 #elif defined(MOZ_WIDGET_ANDROID)
     { &kNS_NETWORK_LINK_SERVICE_CID, false, nullptr, nsAndroidNetworkLinkServiceConstructor },
-#elif defined(XP_LINUX)
+#elif defined(XP_LINUX) && !defined(ANDROID_PORTS)
     { &kNS_NETWORK_LINK_SERVICE_CID, false, nullptr, nsNotifyAddrListenerConstructor },
 #endif
     { &kNS_SERIALIZATION_HELPER_CID, false, nullptr, nsSerializationHelperConstructor },

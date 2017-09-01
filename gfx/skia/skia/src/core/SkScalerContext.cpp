@@ -136,7 +136,7 @@ SkScalerContext::~SkScalerContext() {
 // Return the context associated with the next logical typeface, or NULL if
 // there are no more entries in the fallback chain.
 SkScalerContext* SkScalerContext::allocNextContext() const {
-#ifdef SK_BUILD_FOR_ANDROID
+#if defined(SK_BUILD_FOR_ANDROID) && !defined(ANDROID_PORTS)
     SkTypeface* newFace = SkAndroidNextLogicalTypeface(fRec.fFontID,
                                                        fRec.fOrigFontID,
                                                        fPaintOptionsAndroid);

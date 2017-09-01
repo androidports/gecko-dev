@@ -154,6 +154,10 @@ static SECStatus RNG_kstat(PRUint32* fed)
 
 #endif
 
+#ifdef __ANDROID__
+#define getdtablesize() sysconf(_SC_OPEN_MAX)
+#endif
+
 #if defined(SCO) || defined(UNIXWARE) || defined(BSDI) || defined(FREEBSD) \
     || defined(NETBSD) || defined(DARWIN) || defined(OPENBSD) \
     || defined(NTO) || defined(__riscos__)
