@@ -328,7 +328,7 @@ nsHttpHandler::Init()
     mSchedulingContextService =
         do_GetService("@mozilla.org/network/scheduling-context-service;1");
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
     mProductSub.AssignLiteral(MOZILLA_UAVERSION);
 #else
     mProductSub.AssignLiteral("20100101");
@@ -719,7 +719,7 @@ nsHttpHandler::InitUserAgentComponents()
 #ifndef MOZ_UA_OS_AGNOSTIC
     // Gather platform.
     mPlatform.AssignLiteral(
-#if defined(ANDROID)
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
     "Android"
 #elif defined(XP_WIN)
     "Windows"
@@ -736,7 +736,7 @@ nsHttpHandler::InitUserAgentComponents()
 #endif
 
 
-#ifdef ANDROID
+#if defined(ANDROID) && !defined(ANDROID_PORTS)
     nsCOMPtr<nsIPropertyBag2> infoService = do_GetService("@mozilla.org/system-info;1");
     MOZ_ASSERT(infoService, "Could not find a system info service");
     nsresult rv;
