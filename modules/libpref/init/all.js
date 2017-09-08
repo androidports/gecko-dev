@@ -454,7 +454,7 @@ pref("media.getusermedia.playout_delay", 10);
 #elif defined(XP_WIN)
 pref("media.peerconnection.capture_delay", 50);
 pref("media.getusermedia.playout_delay", 40);
-#elif defined(ANDROID)
+#elif defined(MOZ_WIDGET_ANDROID)
 pref("media.peerconnection.capture_delay", 100);
 pref("media.getusermedia.playout_delay", 100);
 // Whether to enable Webrtc Hardware acceleration support
@@ -470,7 +470,7 @@ pref("media.getusermedia.playout_delay", 50);
 #endif
 #endif
 
-#if !defined(ANDROID)
+#if !defined(MOZ_WIDGET_ANDROID)
 pref("media.getusermedia.screensharing.enabled", true);
 #endif
 
@@ -658,7 +658,7 @@ pref("gfx.downloadable_fonts.disable_cache", false);
 
 pref("gfx.downloadable_fonts.woff2.enabled", true);
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 pref("gfx.bundled_fonts.enabled", true);
 pref("gfx.bundled_fonts.force-enabled", false);
 #endif
@@ -721,7 +721,7 @@ pref("gfx.content.azure.backends", "cairo");
 #ifdef MOZ_WIDGET_GTK2
 pref("gfx.content.azure.backends", "cairo");
 #endif
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 pref("gfx.content.azure.backends", "cairo");
 #endif
 
@@ -1142,7 +1142,7 @@ pref("javascript.options.ion",              true);
 pref("javascript.options.asmjs",            true);
 pref("javascript.options.native_regexp",    true);
 pref("javascript.options.parallel_parsing", true);
-#if !defined(RELEASE_BUILD) && !defined(ANDROID) && !defined(MOZ_B2G) && !defined(XP_IOS)
+#if !defined(RELEASE_BUILD) && !defined(MOZ_WIDGET_ANDROID) && !defined(MOZ_B2G) && !defined(XP_IOS)
 pref("javascript.options.asyncstack",       true);
 #else
 pref("javascript.options.asyncstack",       false);
@@ -1853,7 +1853,7 @@ pref("network.proxy.no_proxies_on",         "localhost, 127.0.0.1");
 pref("network.proxy.failover_timeout",      1800); // 30 minutes
 pref("network.online",                      true); //online/offline
 pref("network.cookie.cookieBehavior",       0); // 0-Accept, 1-dontAcceptForeign, 2-dontAcceptAny, 3-limitForeign
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 pref("network.cookie.cookieBehavior",       0); // Keep the old default of accepting all cookies
 #endif
 pref("network.cookie.thirdparty.sessionOnly", false);
@@ -3640,7 +3640,7 @@ pref("mousewheel.enable_pixel_scrolling", true);
 # XP_MACOSX
 #endif
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 // Handled differently under Mac/Windows
 pref("network.protocol-handler.warn-external.file", false);
 pref("browser.drag_out_of_frame_style", 1);
@@ -3701,10 +3701,10 @@ pref("ui.panel.default_level_parent", true);
 
 pref("mousewheel.system_scroll_override_on_root_content.enabled", false);
 
-# ANDROID
+# MOZ_WIDGET_ANDROID
 #endif
 
-#ifndef ANDROID
+#ifndef MOZ_WIDGET_ANDROID
 #ifndef XP_MACOSX
 #ifdef XP_UNIX
 // Handled differently under Mac/Windows
@@ -3908,7 +3908,7 @@ pref("gfx.font_rendering.fontconfig.max_generic_substitutions", 3);
 #endif
 #endif
 
-#if defined(ANDROID) || defined(MOZ_B2G)
+#if defined(MOZ_WIDGET_ANDROID) || defined(MOZ_B2G)
 
 pref("font.size.fixed.ar", 12);
 
@@ -3926,7 +3926,7 @@ pref("font.size.fixed.x-unicode", 12);
 pref("font.default.x-western", "sans-serif");
 pref("font.size.fixed.x-western", 12);
 
-# ANDROID || MOZ_B2G
+# MOZ_WIDGET_ANDROID || MOZ_B2G
 #endif
 
 #if defined(MOZ_B2G)
@@ -3992,7 +3992,7 @@ pref("font.name-list.serif.x-math", "Latin Modern Math, XITS Math, Cambria Math,
 pref("font.name.sans-serif.x-math", "Fira Sans");
 pref("font.name.monospace.x-math", "Fira Mono");
 
-#elif defined(ANDROID)
+#elif defined(MOZ_WIDGET_ANDROID)
 // We use the bundled fonts for Firefox for Android
 
 // ar
@@ -4198,7 +4198,7 @@ pref("image.multithreaded_decoding.limit", -1);
 pref("canvas.image.cache.limit", 0);
 
 // WebGL prefs
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 // Disable MSAA on mobile.
 pref("gl.msaa-level", 0);
 #else
@@ -4285,7 +4285,7 @@ pref("layers.acceleration.disabled", false);
 pref("layers.bench.enabled", false);
 
 // Whether to force acceleration on, ignoring blacklists.
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 // bug 838603 -- on Android, accidentally blacklisting OpenGL layers
 // means a startup crash for everyone.
 // Temporarily force-enable GL compositing.  This is default-disabled
@@ -4373,7 +4373,7 @@ pref("layers.bufferrotation.enabled", true);
 
 pref("layers.componentalpha.enabled", true);
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 pref("gfx.apitrace.enabled",false);
 #endif
 

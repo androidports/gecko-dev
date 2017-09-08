@@ -177,7 +177,7 @@ XPCOMUtils.defineLazyGetter(this, "permMgr", function() {
 
 #ifdef MOZ_WIDGET_GONK
   const DIRECTORY_NAME = "webappsDir";
-#elifdef ANDROID
+#elifdef MOZ_WIDGET_ANDROID
   const DIRECTORY_NAME = "webappsDir";
 #else
   // If we're executing in the context of the webapp runtime, the data files

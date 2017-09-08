@@ -2241,7 +2241,7 @@ Engine.prototype = {
         uri = gChromeReg.convertChromeURL(uri);
       }
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
       // On Android the omni.ja file isn't at the same path as the binary
       // used to start the process. We tweak the path here so that the code
       // shared with Desktop will correctly identify files from the omni.ja
@@ -2397,7 +2397,7 @@ Engine.prototype = {
     url.addParam(aName, aValue);
   },
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
   get _defaultMobileResponseType() {
     let type = URLTYPE_SEARCH_HTML;
 
@@ -2418,7 +2418,7 @@ Engine.prototype = {
 
   // from nsISearchEngine
   getSubmission: function SRCH_ENG_getSubmission(aData, aResponseType, aPurpose) {
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
     if (!aResponseType) {
       aResponseType = this._defaultMobileResponseType;
     }
@@ -2456,7 +2456,7 @@ Engine.prototype = {
 
   // from nsISearchEngine
   getResultDomain: function SRCH_ENG_getResultDomain(aResponseType) {
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
     if (!aResponseType) {
       aResponseType = this._defaultMobileResponseType;
     }
@@ -2477,7 +2477,7 @@ Engine.prototype = {
    * Returns URL parsing properties used by _buildParseSubmissionMap.
    */
   getURLParsingInfo: function () {
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
     let responseType = this._defaultMobileResponseType;
 #else
     let responseType = URLTYPE_SEARCH_HTML;

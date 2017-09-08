@@ -40,7 +40,7 @@ const IS_UNIX = true;
 const IS_UNIX = false;
 #endif
 
-#ifdef ANDROID
+#ifdef MOZ_WIDGET_ANDROID
 const IS_ANDROID = true;
 #else
 const IS_ANDROID = false;
