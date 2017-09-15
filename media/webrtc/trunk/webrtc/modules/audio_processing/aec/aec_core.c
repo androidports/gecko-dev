@@ -33,6 +33,13 @@
 #include "webrtc/system_wrappers/interface/cpu_features_wrapper.h"
 #include "webrtc/typedefs.h"
 
+#if defined(ANDROID) && defined(ANDROID_PORTS)
+extern uint64_t    android_getCpuFeatures(void);
+uint64_t WebRtc_GetCPUFeaturesARM(void) {
+  return android_getCpuFeatures();
+}
+#endif
+
 extern int AECDebug();
 extern uint32_t AECDebugMaxSize();
 extern void AECDebugEnable(uint32_t enable);
