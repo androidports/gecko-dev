@@ -127,7 +127,7 @@ nsFileControlFrame::CreateAnonymousContent(nsTArray<ContentInfo>& aElements)
 {
   nsCOMPtr<nsIDocument> doc = mContent->GetComposedDoc();
 
-#if defined(ANDROID) || defined(MOZ_B2G)
+#if defined(MOZ_WIDGET_ANDROID) || defined(MOZ_B2G)
    bool isDirPicker = false;
 #else
   nsIContent* content = GetContent();

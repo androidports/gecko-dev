@@ -233,7 +233,7 @@ GetUnixHomeDir(nsIFile** aFile)
                                  true,
                                  aFile);
   }
-#elif defined(ANDROID)
+#elif defined(ANDROID) && !defined(ANDROID_PORTS)
   // XXX no home dir on android; maybe we should return the sdcard if present?
   return NS_ERROR_FAILURE;
 #else

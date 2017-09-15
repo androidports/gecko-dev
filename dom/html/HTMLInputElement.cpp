@@ -4860,7 +4860,7 @@ HTMLInputElement::ChooseDirectory(ErrorResult& aRv)
   // "Pick Folder..." button on platforms that don't have a directory picker
   // we have to redirect to the file picker here.
   InitFilePicker(
-#if defined(ANDROID) || defined(MOZ_B2G)
+#if defined(MOZ_WIDGET_ANDROID) || defined(MOZ_B2G)
                  // No native directory picker - redirect to plain file picker
                  FILE_PICKER_FILE
 #else
@@ -4926,7 +4926,7 @@ HTMLInputElement::GetFilesAndDirectories(ErrorResult& aRv)
   RefPtr<OSFileSystem> fs;
   for (uint32_t i = 0; i < filesAndDirs.Length(); ++i) {
     if (filesAndDirs[i]->IsDirectory()) {
-#if defined(ANDROID) || defined(MOZ_B2G)
+#if defined(MOZ_WIDGET_ANDROID) || defined(MOZ_B2G)
       MOZ_ASSERT(false,
                  "Directory picking should have been redirected to normal "
                  "file picking for platforms that don't have a directory "
