@@ -435,6 +435,7 @@ sctp_init_ifns_for_vrf(int vrfid)
 static void
 sctp_init_ifns_for_vrf(int vrfid)
 {
+#ifndef ANDROID
 #if defined(INET) || defined(INET6)
 	int rc;
 	struct ifaddrs *ifa = NULL;
@@ -492,6 +493,7 @@ sctp_init_ifns_for_vrf(int vrfid)
 			sctp_ifa->localifa_flags &= ~SCTP_ADDR_DEFER_USE;
 		}
 	}
+#endif
 #endif
 }
 #endif

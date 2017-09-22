@@ -99,6 +99,7 @@ sctp_handle_ifamsg(unsigned char type, unsigned short index, struct sockaddr *sa
 		return;
 	}
 
+#ifndef ANDROID
 	rc = getifaddrs(&g_interfaces);
 	if (rc != 0) {
 		return;
@@ -144,6 +145,7 @@ sctp_handle_ifamsg(unsigned char type, unsigned short index, struct sockaddr *sa
 		                       if_nametoindex(ifa->ifa_name),
 		                       ifa->ifa_name);
 	}
+#endif
 }
 
 static void *

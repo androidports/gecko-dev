@@ -86,7 +86,7 @@ VNET_DEFINE(struct sctp_base_info, system_base_info);
 struct sctp_base_info system_base_info;
 #endif
 
-#if defined(__Userspace__)
+#if defined(__Userspace__) && !defined(ANDROID)
 #if defined(INET) || defined(INET6)
 struct ifaddrs *g_interfaces;
 #endif
@@ -6985,7 +6985,7 @@ sctp_pcb_finish(void)
 	/* free the vrf hashes */
 	SCTP_HASH_FREE(SCTP_BASE_INFO(sctp_vrfhash), SCTP_BASE_INFO(hashvrfmark));
 	SCTP_HASH_FREE(SCTP_BASE_INFO(vrf_ifn_hash), SCTP_BASE_INFO(vrf_ifn_hashmark));
-#if defined(__Userspace__) && !defined(__Userspace_os_Windows)
+#if defined(__Userspace__) && !defined(__Userspace_os_Windows) && !defined(ANDROID)
 	/* free memory allocated by getifaddrs call */
 #if defined(INET) || defined(INET6)
 	freeifaddrs(g_interfaces);
