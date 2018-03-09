@@ -7321,8 +7321,6 @@ else
     if test -n "$gonkdir"; then
       AC_DEFINE(MOZ_MEMORY_GONK)
     fi
-    DSO_LDOPTS="$DSO_LDOPTS -nostartfiles"
-    NSPR_LDFLAGS="$NSPR_LDFLAGS -nostartfiles"
     ;;
   *-*linux*)
     AC_DEFINE(MOZ_MEMORY_LINUX)
