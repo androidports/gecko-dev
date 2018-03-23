@@ -4947,8 +4947,13 @@ mozilla::BrowserTabsRemoteAutostart()
     return gBrowserTabsRemoteAutostart;
   }
 
+#ifdef MOZ_MSIE_VERSION
+  bool optInPref = false;
+  bool trialPref = false;
+#else
   bool optInPref = Preferences::GetBool("browser.tabs.remote.autostart", false);
   bool trialPref = Preferences::GetBool("browser.tabs.remote.autostart.2", false);
+#endif
   bool prefEnabled = optInPref || trialPref;
   int status;
   if (optInPref) {
