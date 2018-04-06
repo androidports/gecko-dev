@@ -59,8 +59,10 @@ interface Node : EventTarget {
 
   [SetterThrows, Pure]
            attribute DOMString? nodeValue;
+#ifndef MOZ_MSIE_TARGET_8
   [Throws, Pure]
            attribute DOMString? textContent;
+#endif
   [Throws]
   Node insertBefore(Node node, Node? child);
   [Throws]

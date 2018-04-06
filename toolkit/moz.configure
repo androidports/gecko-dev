@@ -832,13 +832,49 @@ option('--with-msie-version', nargs=1, help='Set MSIE version for Open IE.')
 
 @depends('--with-msie-version')
 def msie_version(value):
-    if value and value[0] == '8':
-        return '8'
+    if value and (value[0] == '8' or value[0] == '9' or value[0] == '10' or value[0] == '11'):
+        return value[0]
     else:
-        die('Only --with-msie-version=8 is supported.');
+        die('Invalid value --with-msie-version, [8-11] is supported.');
+
+@depends('--with-msie-version')
+def msie_target_8(value):
+    if value and value[0] == '8':
+        return True
+    else:
+        return False;
+
+@depends('--with-msie-version')
+def msie_target_9(value):
+    if value and value[0] == '9':
+        return True
+    else:
+        return False;
+
+@depends('--with-msie-version')
+def msie_target_10(value):
+    if value and value[0] == '10':
+        return True
+    else:
+        return False;
+
+@depends('--with-msie-version')
+def msie_target_11(value):
+    if value and value[0] == '11':
+        return True
+    else:
+        return False;
 
 set_config('MOZ_MSIE_VERSION', msie_version)
 set_define('MOZ_MSIE_VERSION', msie_version)
+set_config('MOZ_MSIE_TARGET_8', msie_target_8)
+set_define('MOZ_MSIE_TARGET_8', msie_target_8)
+set_config('MOZ_MSIE_TARGET_9', msie_target_9)
+set_define('MOZ_MSIE_TARGET_9', msie_target_9)
+set_config('MOZ_MSIE_TARGET_10', msie_target_10)
+set_define('MOZ_MSIE_TARGET_10', msie_target_10)
+set_config('MOZ_MSIE_TARGET_11', msie_target_11)
+set_define('MOZ_MSIE_TARGET_11', msie_target_11)
 
 
 # Support various fuzzing options
