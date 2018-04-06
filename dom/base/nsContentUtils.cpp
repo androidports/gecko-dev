@@ -9062,8 +9062,12 @@ StartElement(Element* aContent, StringBuilder& aBuilder)
   int32_t tagNS = aContent->GetNameSpaceID();
 
   aBuilder.Append("<");
+#ifdef MOZ_MSIE_VERSION
+  if (aContent->IsSVGElement() || aContent->IsMathMLElement()) {
+#else
   if (aContent->IsHTMLElement() || aContent->IsSVGElement() ||
       aContent->IsMathMLElement()) {
+#endif
     aBuilder.Append(localName);
   } else {
     aBuilder.Append(aContent->NodeName());
@@ -9262,8 +9266,12 @@ nsContentUtils::SerializeNodeToMarkup(nsINode* aRoot,
       if (!isVoid && current->NodeType() == nsIDOMNode::ELEMENT_NODE) {
         builder.Append("</");
         nsIContent* elem = static_cast<nsIContent*>(current);
+#ifdef MOZ_MSIE_VERSION
+        if (elem->IsSVGElement() || elem->IsMathMLElement()) {
+#else
         if (elem->IsHTMLElement() || elem->IsSVGElement() ||
             elem->IsMathMLElement()) {
+#endif
           builder.Append(elem->NodeInfo()->NameAtom());
         } else {
           builder.Append(current->NodeName());
